@@ -1,0 +1,25 @@
+﻿Liste todos os IDs únicos dos produtos vendidos pela empresa, ou seja, uma lista de produtos distintos. Utilize a cláusula DISTINCT para garantir que os IDs dos produtos sejam únicos.
+SELECT DISTINCT id_produto from tabelavendasdesafioaula1;
+
+Identifique os clientes que se cadastraram na empresa antes de 2020. Liste o nome e a data de cadastro desses clientes. Utilize a cláusula WHERE para filtrar os registros.
+SELECT DISTINCT  nome_do_cliente, data_de_cadastro from tabelaclientesdesafioaula1 WHERE data_de_cadastro <= 2020-01-01;
+Criação da tabela
+CREATE TABLE tabelaclientes ( 
+  ID_cliente INT PRIMARY KEY,
+  Nome_cliente VARCHAR (250),
+  Informacoes_contato VARCHAR (250)
+                            );
+SELECT * FROM tabelaclientes;
+Alterando tabela
+alter table tabelaclientes add Endereco_cliente VARCHAR (250);
+Criação
+CREATE TABLE tabelaprodutos (
+  ID_Produto INT PRIMARY KEY,
+  Nome_do_Produto VARCHAR (250),
+  Descrição TEXT,
+  Categoria INT,
+  Preco_de_Compra DECIMAL (10,2),
+  Unidade VARCHAR (50),
+  Fornecedor INT,
+  Data_de_Inclusao DATE
+);
