@@ -212,7 +212,7 @@ end;
 --"Crie uma trigger chamada CalculaFaturamentoDiario que sera executada apos inserção de infomarções na tabela itenspedidos,
 -- para cada linha inserida, que irá deletar os dados da tabela FaturamentoDiario e inserir o dia e o faturamento total do dia,
 -- que é a soma do preço unitário dos itens pedidos agrupados por dia, ordenados por dia".
-
+--PRAGMA foreign_keys = ON;
 INSERT INTO Pedidos(ID, IDCliente, DataHoraPedido, Status)
 VALUES (451, 27, '2023-10-07 14:30:00', 'Em Andamento');
 INSERT INTO Pedidos (ID, IDCliente, DataHoraPedido, Status) 
@@ -225,3 +225,31 @@ INSERT INTO ItensdePedido(IDPedido, IDProduto, Quantidade, PrecoUnitario) VALUES
 --Dados inseridos para testar a trigger CalculaFaturamentoDiario, que ira delatar os dados anteriores ao INSERT em ItensdePedidos
 -- e inserir os novos dados na tabela FaturamentoDiario, com o dia e o faturamento total do dia, que é a soma do preço unitário dos
 -- itens pedidos agrupados por dia, ordenados por dia.
+--PRAGMA foreign_keys = ON
+--O pragma é uma funcionalidade exclusiva do SQLite online. Usada para modificar as configuraçõe e validar nossas chaves estrangeiras.
+
+UPDATE produtos set preco = 13.0 WHERE id = 30;
+SELECT * FROM produtos;
+--UPTADATE é usado para modificar os dados existentes em uma tabela. O comando UPDATE altera os valores das colunas especificadas 
+--para as linhas que atendem a uma condição específica.
+--Atualiza o preço do produto com id 30 para 13.0 e seleciona todos os produtos para verificar a atualização.
+UPDATE produtos set descricao = 'Croissant recheado com amendoas' WHERE id = 28
+SELECT * from produtos WHERE nome like 'croissant%';
+--Atualiza a descrição do produto com id 28 para 'Croissant recheado com amendoas' e seleciona todos os produtos cujo nome começa
+-- com 'croissant' para verificar a atualização.
+
+DELETE FROM clientes where id = 27;
+--DELETE é usado para remover linhas de uma tabela com base em uma condição específica.
+--como havia em outras tabelas, colunas que faziam referência a esse cliente, apos o comando pragma foreign_keys = ON, o SQLite online
+--permitirar que essas linhas sejam deletadas, pois os compos referenciados em outras tabelas serão deletados automaticamente com
+--ON DELETE CASCADE, que foi definido na criação da tabela pedidos e itenspedidos.
+
+BEGIN TRANSACTION;
+UPDATE pedidos set status = 'Cncluido'
+DELETE from clientes
+SELECT * from pedidos
+SELECT * from clientes
+ROLLBACK;
+--BEGIN TRANSACTION inicia uma transação, que é um conjunto de operações que são executadas como uma única unidade de trabalho.
+--ROLLBACK desfaz todas as operações realizadas desde o início da transação, revertendo o banco de dados para o estado anterior à transação.
+--COMMIT finaliza a transação, tornando permanentes todas as operações realizadas desde o início da transação.
